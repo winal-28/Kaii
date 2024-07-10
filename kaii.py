@@ -46,7 +46,7 @@ async def cmd(ctx):
         title="Kaii Commands",
         url="https://discord.com/app",
         description=
-        f"Command prefix: CAE {nl} Here are the list of commands:{nl} CAEcommands - Shows this {nl} CAEping - check bot ping {nl} CAEtanginamo - Makes me mad >:( {nl} CAEmsg (insert what you want me to say here) - makes me say shit on your demand!, {nl} Moderation Commands {nl}{nl} CAEkick (insert user here) - kicks the member you want to kick {nl} CAEban (insert user here) - bans the member you want to kick {nl}{nl}",
+        f"Command prefix: CAE {nl} Here are the list of commands:{nl} CAEcommands - Shows this {nl} CAEping - check bot ping {nl} CAEtanginamo - Makes me mad >:( {nl} CAEmsg (insert what you want me to say here) - makes me say stuff on your demand! {nl} Moderation Commands {nl}{nl} CAEkick (insert user here) - kicks the member you want to kick {nl} CAEban (insert user here) - bans the member you want to kick {nl} {nl}",
         color=0x00FFFF)
     await ctx.send(embed=embed)
 
@@ -78,8 +78,10 @@ async def mute_error(ctx, error):
 @kaii.command()
 @commands.has_permissions(manage_roles=True, manage_channels=True)
 async def unmute(ctx, *, user: discord.Member):
-    await user.edit(mute=False)
+    role = discord.utils.get(ctx.guild.roles, name="Muted")
+    await user.remove_roles(role)
     await ctx.send(f"{user.mention} has been unmuted.")
+    print("unmute command executed")
 
 @unmute.error
 async def unmute_error(ctx, error):
